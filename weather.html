@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Weather Forecast</title>
+  <style>
+    .weather-widget {
+      width: 300px;
+      height: 200px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="weather-widget">
+    <h2>Live Weather Forecast</h2>
+    <p id="weather-info">Loading...</p>
+  </div>
+
+  <script>
+    // Replace the 'YOUR_API_KEY' with your actual OpenWeatherMap API key
+    const apiKey = '08114e536bb5c187e8004fdb921ed20b';
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=Addis%20Ababa,ET&appid=${apiKey}`;
+
+    const weatherInfo = document.getElementById('weather-info');
+
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        const temperature = Math.round(data.main.temp - 273.15); // Convert temperature from Kelvin to Celsius
+        const description = data.weather[0].description;
+
+        weatherInfo.textContent = `Temperature: ${temperature}°C, Description: ${description}`;
+      })
+      .catch(error => {
+        weatherInfo.textContent = 'Failed to fetch weather data.';
+        console.error(error);
+      });
+  </script>
+</body>
+</html>
